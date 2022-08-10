@@ -1,13 +1,11 @@
-# Apollo Server example
+# Spruce  Take Home
+This was an interesting project that had me learning the basics of graphQL.
+There are a bunch of tradeoffs I made to help speed up the development process.
+I would be happy to talk  about the assignment and where I had difficulty and what parts I made tradeoffs in the interest of time.
 
-The purpose if this repo is to demonstrate how to implement a GraphQL API with the following tech stack:
 
-- [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
-- [Express](https://expressjs.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [GraphQL code generator](https://graphql-code-generator.com/)
-
-The API includes a schema and resolver implementation for a simple book catalogue (with a mock in-memory database).
+Project was forked from an example project that I found on github.
+https://github.com/flowup/apollo-server-example
 
 ## Prerequisites
 

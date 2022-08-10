@@ -1,26 +1,43 @@
 type Query {
-  books: [Book!]!
-  book(id: ID!): Book
-  authors: [Author!]!
-  author(id: ID!): Author
+  properties: [Property!]!
+  property(id:ID, legacy_id:String): Property
+  propertySearch(name:String): [Property]!
 }
 
 type Mutation {
-  createBook(title: String!, authorId: ID!): Book!
-  createAuthor(name: String!, dateOfBirth: Date): Author!
+  createProperty(name: String!
+    isLive: Boolean!
+    goLiveDate: Date!
+    numberOfUnits: Int
+    address: String!
+    city: String!
+    state: String!
+    zip: String!): Boolean!
+  updateProperty( legacy_id: ID!
+    name: String!
+    isLive: Boolean!
+    goLiveDate: Date!
+    numberOfUnits: Int
+    address: String!
+    city: String!
+    state: String!
+    zip: String!): Boolean!
 }
 
 scalar Date
+scalar DateTime
 
-type Book {
-  id: ID!
-  title: String!
-  author: Author!
-}
-
-type Author {
-  id: ID!
-  name: String!
-  dateOfBirth: Date
-  books: [Book!]!
+type Property {
+  id: ID
+  legacyId: Int
+  name: String
+  isLive: Boolean
+  goLiveDate: Date
+  numberOfUnits: Int
+  address: String
+  city: String
+  state: String
+  zip: String
+  created:DateTime
+  updated:DateTime
 }

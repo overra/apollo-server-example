@@ -1,14 +1,18 @@
-import { BookRow } from './db/books';
-import { Book, Author } from './generated/graphql';
-import { AuthorRow } from './db/authors';
+import { Property } from './generated/graphql';
 
-export function convertBook(book: BookRow): Book {
+export function convertProperty(legacyProperty: any, modernProperty: any): Property {
   return {
-    ...book,
-    author: { id: book.authorId, name: '', books: [] },
+    id: modernProperty.id,
+    legacyId: legacyProperty.id,
+    name: legacyProperty.name,
+    isLive: modernProperty.is_live,
+    goLiveDate: modernProperty.go_live_date.toDateString(),
+    address: legacyProperty.address,
+    city: legacyProperty.city,
+    state: legacyProperty.state,
+    zip: legacyProperty.zip,
+    numberOfUnits: modernProperty.numer_of_units,
+    created: legacyProperty.created_at.toISOString(),
+    updated: legacyProperty.updated_at ? legacyProperty.updated_at.toISOString() : null,
   };
-}
-
-export function convertAuthor(author: AuthorRow): Author {
-  return { ...author, books: [] };
 }

@@ -13,58 +13,74 @@ export type Scalars = {
   Int: number;
   Float: number;
   Date: string;
+  DateTime: string;
 };
 
-export type Author = {
-  __typename?: 'Author';
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  dateOfBirth?: Maybe<Scalars['Date']>;
-  books: Array<Book>;
-};
-
-export type Book = {
-  __typename?: 'Book';
-  id: Scalars['ID'];
-  title: Scalars['String'];
-  author: Author;
-};
 
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createBook: Book;
-  createAuthor: Author;
+  createProperty: Scalars['Boolean'];
+  updateProperty: Scalars['Boolean'];
 };
 
 
-export type MutationCreateBookArgs = {
-  title: Scalars['String'];
-  authorId: Scalars['ID'];
-};
-
-
-export type MutationCreateAuthorArgs = {
+export type MutationCreatePropertyArgs = {
   name: Scalars['String'];
-  dateOfBirth?: Maybe<Scalars['Date']>;
+  isLive: Scalars['Boolean'];
+  goLiveDate: Scalars['Date'];
+  numberOfUnits?: Maybe<Scalars['Int']>;
+  address: Scalars['String'];
+  city: Scalars['String'];
+  state: Scalars['String'];
+  zip: Scalars['String'];
+};
+
+
+export type MutationUpdatePropertyArgs = {
+  legacy_id: Scalars['ID'];
+  name: Scalars['String'];
+  isLive: Scalars['Boolean'];
+  goLiveDate: Scalars['Date'];
+  numberOfUnits?: Maybe<Scalars['Int']>;
+  address: Scalars['String'];
+  city: Scalars['String'];
+  state: Scalars['String'];
+  zip: Scalars['String'];
+};
+
+export type Property = {
+  __typename?: 'Property';
+  id?: Maybe<Scalars['ID']>;
+  legacyId?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  isLive?: Maybe<Scalars['Boolean']>;
+  goLiveDate?: Maybe<Scalars['Date']>;
+  numberOfUnits?: Maybe<Scalars['Int']>;
+  address?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  zip?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  updated?: Maybe<Scalars['DateTime']>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  books: Array<Book>;
-  book?: Maybe<Book>;
-  authors: Array<Author>;
-  author?: Maybe<Author>;
+  properties: Array<Property>;
+  property?: Maybe<Property>;
+  propertySearch: Array<Maybe<Property>>;
 };
 
 
-export type QueryBookArgs = {
-  id: Scalars['ID'];
+export type QueryPropertyArgs = {
+  id?: Maybe<Scalars['ID']>;
+  legacy_id?: Maybe<Scalars['String']>;
 };
 
 
-export type QueryAuthorArgs = {
-  id: Scalars['ID'];
+export type QueryPropertySearchArgs = {
+  name?: Maybe<Scalars['String']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -147,63 +163,69 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
-  Book: ResolverTypeWrapper<Book>;
+  Property: ResolverTypeWrapper<Property>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Author: ResolverTypeWrapper<Author>;
-  Date: ResolverTypeWrapper<Scalars['Date']>;
-  Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  Mutation: ResolverTypeWrapper<{}>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Query: {};
-  Book: Book;
+  Property: Property;
   ID: Scalars['ID'];
+  Int: Scalars['Int'];
   String: Scalars['String'];
-  Author: Author;
-  Date: Scalars['Date'];
-  Mutation: {};
   Boolean: Scalars['Boolean'];
-}>;
-
-export type AuthorResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Author'] = ResolversParentTypes['Author']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  dateOfBirth?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  books?: Resolver<Array<ResolversTypes['Book']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-}>;
-
-export type BookResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  author?: Resolver<ResolversTypes['Author'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+  Date: Scalars['Date'];
+  DateTime: Scalars['DateTime'];
+  Mutation: {};
 }>;
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
 }
 
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
+
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  createBook?: Resolver<ResolversTypes['Book'], ParentType, ContextType, RequireFields<MutationCreateBookArgs, 'title' | 'authorId'>>;
-  createAuthor?: Resolver<ResolversTypes['Author'], ParentType, ContextType, RequireFields<MutationCreateAuthorArgs, 'name'>>;
+  createProperty?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationCreatePropertyArgs, 'name' | 'isLive' | 'goLiveDate' | 'address' | 'city' | 'state' | 'zip'>>;
+  updateProperty?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUpdatePropertyArgs, 'legacy_id' | 'name' | 'isLive' | 'goLiveDate' | 'address' | 'city' | 'state' | 'zip'>>;
+}>;
+
+export type PropertyResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Property'] = ResolversParentTypes['Property']> = ResolversObject<{
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  legacyId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  isLive?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  goLiveDate?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  numberOfUnits?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  city?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  state?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  zip?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  updated?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  books?: Resolver<Array<ResolversTypes['Book']>, ParentType, ContextType>;
-  book?: Resolver<Maybe<ResolversTypes['Book']>, ParentType, ContextType, RequireFields<QueryBookArgs, 'id'>>;
-  authors?: Resolver<Array<ResolversTypes['Author']>, ParentType, ContextType>;
-  author?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<QueryAuthorArgs, 'id'>>;
+  properties?: Resolver<Array<ResolversTypes['Property']>, ParentType, ContextType>;
+  property?: Resolver<Maybe<ResolversTypes['Property']>, ParentType, ContextType, RequireFields<QueryPropertyArgs, never>>;
+  propertySearch?: Resolver<Array<Maybe<ResolversTypes['Property']>>, ParentType, ContextType, RequireFields<QueryPropertySearchArgs, never>>;
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
-  Author?: AuthorResolvers<ContextType>;
-  Book?: BookResolvers<ContextType>;
   Date?: GraphQLScalarType;
+  DateTime?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
+  Property?: PropertyResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 }>;
 

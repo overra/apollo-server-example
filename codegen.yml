@@ -12,3 +12,4 @@ generates:
       contextType: ../resolvers/types#Context
       scalars:
         Date: string
+        DateTime: string
